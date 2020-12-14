@@ -11,9 +11,8 @@ LINK = arm-none-eabi-gcc
 AS = arm-none-eabi-as
 OBJCOPY = arm-none-eabi-objcopy
 OBJDUMP = arm-none-eabi-objdump
-CFLAGS += -Wall -mbig-endian -std=gnu11 -mcpu=arm926ej-s -msoft-float -mfloat-abi=soft -Os
-LDFLAGS += -nostartfiles -nodefaultlibs -mbig-endian -Wl,-T,link.ld
-LIBDIRS += -L$(CURDIR)/../libs
+CFLAGS += -Wall -mbig-endian -std=gnu11 -mcpu=arm926ej-s -msoft-float -mfloat-abi=soft -Os  -fno-tree-loop-distribute-patterns
+LDFLAGS += -nostartfiles -nodefaultlibs  -mbig-endian -Wl,-T,link.ld
 LIBS += -lgcc
 
 CFILES = $(wildcard source/*.c)

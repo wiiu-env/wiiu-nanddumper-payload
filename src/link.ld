@@ -1,40 +1,25 @@
-OUTPUT(ftpiiu.elf);
+OUTPUT(payload.elf);
 
-/* Tell linker where our application entry is so the garbage collect can work correct */
-ENTRY(__entry_menu);
+ENTRY(_start);
 
 SECTIONS {
-	. = 0x00802000;
+	. = 0x00840000;
 	.text : {
+		*(.kernel_code*);
 		*(.text*);
-	}
-	.rodata : {
-		*(.rodata*);
-	}
+		/* Tell linker to not garbage collect this section as it is not referenced anywhere */
+		KEEP(*(.kernel_code*));
+    }
 	.data : {
-		*(.data*);
-
-		__sdata_start = .;
+		*(.rodata*);
 		*(.sdata*);
-		__sdata_end = .;
-
-		__sdata2_start = .;
-		*(.sdata2*);
-		__sdata2_end = .;
-	}
-	.bss : {
-		__bss_start = .;
+		*(.data*);
 		*(.bss*);
 		*(.sbss*);
-		*(COMMON);
-		__bss_end = .;
 	}
-	__CODE_END = .;
-
 	/DISCARD/ : {
 		*(*);
 	}
 }
 
-/******************************************************** FS ********************************************************/
-/* coreinit.rpl difference in addresses 0xFE3C00 */
+ASSERT((SIZEOF(.text) + SIZEOF(.data)) < 0x7C0000, "elf is too big");

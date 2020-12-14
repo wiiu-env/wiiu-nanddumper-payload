@@ -69,6 +69,7 @@ EXPORT_DECL(int, OSTryLockMutex, void* mutex);
 EXPORT_DECL(u64, OSGetTitleID, void);
 EXPORT_DECL(void, OSGetArgcArgv, int* argc, char*** argv);
 EXPORT_DECL(void, __Exit, void);
+EXPORT_DECL(void, OSSavesDone_ReadyToRelease, void);
 EXPORT_DECL(void, OSFatal, const char* msg);
 EXPORT_DECL(void, OSSetExceptionCallback, u8 exceptionType, exception_callback newCallback);
 EXPORT_DECL(void, DCFlushRange, const void *addr, u32 length);
@@ -121,8 +122,8 @@ void InitAcquireOS(void)
       //!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //! Lib handle functions
     //!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    EXPORT_FUNC_WRITE(OSDynLoad_Acquire, (int (*)(const char*, unsigned *))OS_SPECIFICS->addr_OSDynLoad_Acquire);
-    EXPORT_FUNC_WRITE(OSDynLoad_FindExport, (int (*)(u32, int, const char *, void *))OS_SPECIFICS->addr_OSDynLoad_FindExport);
+    EXPORT_FUNC_WRITE(OSDynLoad_Acquire, (int (*)(const char*, unsigned *))0x0102A3B4);
+    EXPORT_FUNC_WRITE(OSDynLoad_FindExport, (int (*)(u32, int, const char *, void *))0x0102B828);
 
     OSDynLoad_Acquire("coreinit.rpl", &coreinit_handle);
 }
@@ -144,6 +145,7 @@ void InitOSFunctionPointers(void)
     OS_FIND_EXPORT(coreinit_handle, OSFatal);
     OS_FIND_EXPORT(coreinit_handle, OSGetTitleID);
     OS_FIND_EXPORT(coreinit_handle, OSGetArgcArgv);
+    OS_FIND_EXPORT(coreinit_handle, OSSavesDone_ReadyToRelease);
     OS_FIND_EXPORT(coreinit_handle, OSSetExceptionCallback);
     OS_FIND_EXPORT(coreinit_handle, DCFlushRange);
     OS_FIND_EXPORT(coreinit_handle, DCStoreRange);
