@@ -68,7 +68,7 @@ EXPORT_DECL(int, OSTryLockMutex, void* mutex);
 //!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 EXPORT_DECL(u64, OSGetTitleID, void);
 EXPORT_DECL(void, OSGetArgcArgv, int* argc, char*** argv);
-EXPORT_DECL(void, __Exit, void);
+EXPORT_DECL(void, __Exit, int);
 EXPORT_DECL(void, OSSavesDone_ReadyToRelease, void);
 EXPORT_DECL(void, OSFatal, const char* msg);
 EXPORT_DECL(void, OSSetExceptionCallback, u8 exceptionType, exception_callback newCallback);
@@ -155,7 +155,7 @@ void InitOSFunctionPointers(void)
     OS_FIND_EXPORT(coreinit_handle, __os_snprintf);
     OS_FIND_EXPORT(coreinit_handle, __gh_errno_ptr);
 
-    OSDynLoad_FindExport(coreinit_handle, 0, "_Exit", &__Exit);
+    OSDynLoad_FindExport(coreinit_handle, 0, "exit", &__Exit);
 
     OS_FIND_EXPORT(coreinit_handle, OSScreenInit);
     OS_FIND_EXPORT(coreinit_handle, OSScreenShutdown);

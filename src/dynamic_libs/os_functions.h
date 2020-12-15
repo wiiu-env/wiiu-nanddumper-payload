@@ -32,6 +32,8 @@
 extern "C" {
 #endif
 
+
+
 #define BUS_SPEED                       248625000
 #define SECS_TO_TICKS(sec)              (((unsigned long long)(sec)) * (BUS_SPEED/4))
 #define MILLISECS_TO_TICKS(msec)        (SECS_TO_TICKS(msec) / 1000)
@@ -39,6 +41,9 @@ extern "C" {
 
 #define usleep(usecs)                   OSSleepTicks(MICROSECS_TO_TICKS(usecs))
 #define sleep(secs)                     OSSleepTicks(SECS_TO_TICKS(secs))
+
+#define os_usleep(usecs)                   OSSleepTicks(MICROSECS_TO_TICKS(usecs))
+#define os_sleep(secs)                     OSSleepTicks(SECS_TO_TICKS(secs))
 
 #define FLUSH_DATA_BLOCK(addr)          asm volatile("dcbf 0, %0; sync" : : "r"(((addr) & ~31)))
 #define INVAL_DATA_BLOCK(addr)          asm volatile("dcbi 0, %0; sync" : : "r"(((addr) & ~31)))
@@ -110,7 +115,7 @@ extern int (* OSTryLockMutex)(void* mutex);
 //!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 extern u64 (* OSGetTitleID)(void);
 extern void (* OSGetArgcArgv)(int* argc, char*** argv);
-extern void (* __Exit)(void);
+extern void (* __Exit)(int);
 extern void (* OSSavesDone_ReadyToRelease)(void);
 extern void (* OSFatal)(const char* msg);
 extern void (* DCFlushRange)(const void *addr, u32 length);

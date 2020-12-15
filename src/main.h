@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 //! C wrapper for our C++ functions
-int Menu_Main(void);
+int Menu_Main(int argc, char ** argv);
 
 #ifdef __cplusplus
 }

@@ -114,7 +114,7 @@ int _start(int argc, char **argv) {
     unsigned int bufferU32 = 0x4E800421;
     KernelWriteU32(repl_addr,bufferU32,&private_data);
     
-    return Menu_Main();
+    return Menu_Main(argc, argv);
 }
 
 /* Write a 32-bit word with kernel permissions */

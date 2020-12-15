@@ -265,7 +265,7 @@ int ShowMenu(cfw_config_t * currentConfig)
             initScreen = 0;
         }
 
-        usleep(20000);
+        os_usleep(20000);
     }
 
     OSScreenShutdown();

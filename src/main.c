@@ -43,10 +43,7 @@ bool CheckRunning() {
     return true;
 }
 
-
-
-int Menu_Main(void)
-{
+int Menu_Main(int argc, char ** argv){
     //!---------INIT---------
     InitOSFunctionPointers();
     InitSysFunctionPointers();
@@ -55,60 +52,37 @@ int Menu_Main(void)
     InitVPadFunctionPointers();
     InitProcUIFunctionPointers();
 
-    u64 currenTitleId = OSGetTitleID();
-
-    VPADInit();
-    /*int forceMenu = 0;
-
-    {
-        VPADData vpad;
-        int vpadError = -1;
-        VPADRead(0, &vpad, 1, &vpadError);
-
-        if(vpadError == 0)
-        {
-            forceMenu = (vpad.btns_d | vpad.btns_h) & VPAD_BUTTON_B;
-        }
-    }*/
-
-    //mount_sd_fat("sd");
-
     cfw_config_t config;
     default_config(&config);
-    //read_config(&config);
 
-    int launch = 1;
+    //int launch = 1;
+    ShowMenu(&config);
 
-    //if(forceMenu || config.directLaunch == 0)
-    //{
-    launch = ShowMenu(&config);
-    //}
-    
     ExecuteIOSExploit(&config);
+
     if (
-            OSGetTitleID() == 0x000500101004A200L || // mii maker eur
-            OSGetTitleID() == 0x000500101004A100L || // mii maker usa
-            OSGetTitleID() == 0x000500101004A000L) {   // mii maker jpn
+        OSGetTitleID() == 0x000500101004A200L || // mii maker eur
+        OSGetTitleID() == 0x000500101004A100L || // mii maker usa
+        OSGetTitleID() == 0x000500101004A000L) {   // mii maker jpn
 
         // restart mii maker.
         OSForceFullRelaunch();
         SYSLaunchMenu();
-        exit(0);
-    } else {
-        ProcUIInit(OSSavesDone_ReadyToRelease);
-        
-        OSForceFullRelaunch();
-        SYSLaunchMenu();
-
-        while (CheckRunning()) {
-            // wait.
-            OSSleepTicks(MILLISECS_TO_TICKS(100));
-        }
-        ProcUIShutdown();
-
-        return 0;
+          return ( (int (*)(int, char **))(*(unsigned int*)0x1005E040) )(argc, argv);
     }
+    
+    ProcUIInit(OSSavesDone_ReadyToRelease);
+    
+    OSForceFullRelaunch();
+    SYSLaunchMenu();
 
+    while (CheckRunning()) {
+        log_printf_("check");
+        // wait.
+        OSSleepTicks(MILLISECS_TO_TICKS(100));
+    }
+    ProcUIShutdown();
+    log_printf_("exit");
 
     return 0;
 }
