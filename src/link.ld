@@ -3,7 +3,7 @@ OUTPUT(payload.elf);
 ENTRY(_start);
 
 SECTIONS {
-	. = 0x00840000;
+    . = 0x00800000;
 	.text : {
 		*(.kernel_code*);
 		*(.text*);
