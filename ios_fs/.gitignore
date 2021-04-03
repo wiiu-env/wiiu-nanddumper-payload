@@ -1,0 +1,6 @@
+build/
+*.bin
+*.bin.h
+ios_fs.c
+ios_fs.h
+*.elf
