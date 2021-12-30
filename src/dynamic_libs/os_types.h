@@ -7,6 +7,8 @@ extern "C" {
 
 #include <gctypes.h>
 
+typedef u32 BOOL;
+
 typedef struct _OSCalendarTime {
   int sec;
   int min;

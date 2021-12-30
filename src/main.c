@@ -55,10 +55,10 @@ int Menu_Main(int argc, char ** argv){
     cfw_config_t config;
     default_config(&config);
 
-    //int launch = 1;
-    ShowMenu(&config);
-
-    ExecuteIOSExploit(&config);
+    int launch = ShowMenu(&config);
+    if (launch) {
+        ExecuteIOSExploit(&config);
+    }
 
     if (
         OSGetTitleID() == 0x000500101004A200L || // mii maker eur
@@ -66,15 +66,23 @@ int Menu_Main(int argc, char ** argv){
         OSGetTitleID() == 0x000500101004A000L) {   // mii maker jpn
 
         // restart mii maker.
-        OSForceFullRelaunch();
-        SYSLaunchMenu();
-          return ( (int (*)(int, char **))(*(unsigned int*)0x1005E040) )(argc, argv);
+        if (launch) {
+            OSForceFullRelaunch();
+            SYSLaunchMenu();
+        } else {
+            OSShutdown();
+        }
+        return ( (int (*)(int, char **))(*(unsigned int*)0x1005E040) )(argc, argv);
     }
     
     ProcUIInit(OSSavesDone_ReadyToRelease);
     
-    OSForceFullRelaunch();
-    SYSLaunchMenu();
+    if (launch) {
+        OSForceFullRelaunch();
+        SYSLaunchMenu();
+    } else {
+        OSShutdown();
+    }
 
     while (CheckRunning()) {
         log_printf_("check");

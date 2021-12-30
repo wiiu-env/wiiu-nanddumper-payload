@@ -239,7 +239,7 @@ int ShowMenu(cfw_config_t * currentConfig)
             console_print_pos(x_offset, 1, "                -- NAND Dumper --");
 
             console_print_pos(x_offset, 3, "Select your options and press A to launch.");
-            console_print_pos(x_offset, 4, "Press HOME to exit back to HBL.");
+            console_print_pos(x_offset, 4, "Press HOME to shutdown the console.");
             //console_print_pos(x_offset, 5, "Hold B on start to force enter this menu");
 
             int y_offset = 6;
@@ -254,7 +254,7 @@ int ShowMenu(cfw_config_t * currentConfig)
                                   TEXT_SEL(configPtr[idx], " ", "<"), selection_options[idx].disabled, TEXT_SEL(configPtr[idx], " ", ">"));
             }
 
-            console_print_pos(x_offset, 15, "Based on mocha CFW by Dimok.");
+            console_print_pos(x_offset, 15, "Original NAND Dumper by koolkdev. Based on mocha CFW by Dimok.");
             console_print_pos(x_offset, 16, "Credits go to everyone who contributed to Wii U scene publicly.");
             console_print_pos(x_offset, 17, "Special thanks to smealum, plutoo, yellows8, naehrwert and derrek.");
 
